@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Richard Tang</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            sans: ["Ubuntu", "sans-serif"],
+          },
+        },
+      };
+    </script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#e3dcd2]">
+    <nav
+      class="bg-red-800 text-white text-3xl font-bold px-6 py-4 flex items-center flex-initial justify-between"
+    >
+      <div class="hover:text-[#e3dcd2]">
+        <a href="https://github.com/CodeKnight314">RICHARD TANG</a>
+      </div>
+
+      <div class="flex space-x-6">
+        <a href="" class="hover:text-[#e3dcd2] px-3 py-2">About Me</a>
+        <a href="" class="hover:text-[#e3dcd2] px-3 py-2"> Projects</a>
+        <a href="" class="hover:text-[#e3dcd2] px-3 py-2"> Resume</a>
+      </div>
+    </nav>
+
+    <!-- Unified content wrapper -->
+    <div class="max-w-4xl mx-auto mt-20 px-6 space-y-6">
+      <!-- Top row: image + text -->
+      <div class="flex items-center gap-10">
+        <img
+          src="assets/Headshot.png"
+          alt="Headshot"
+          class="w-48 h-48 object-cover rounded-full shadow-md"
+        />
+
+        <div class="space-y-1 text-left">
+          <h1 class="text-3xl font-bold">Richard G Tang</h1>
+          <p class="text-lg font-semibold">
+            B.S. Computer Science + AI concentration
+          </p>
+          <p class="text-lg">Northeastern University Boston | Class of 2028</p>
+          <p class="text-lg text-gray-500">
+            tang.ri [at] northeastern [dot] edu
+          </p>
+          <div class="space-x-4 space-y-1">
+            <a href="https://github.com/CodeKnight314" target="_blank">
+              <img
+                src="assets/github-mark.svg"
+                alt="GitHub"
+                class="w-6 h-6 inline hover:opacity-80"
+              />
+            </a>
+            <a href="https://www.linkedin.com/in/richardgtang/" target="_blank">
+              <img
+                src="assets/linkedin.svg"
+                alt="Linkedin"
+                class="w-6 h-6 inline hover:opacity-80"
+              />
+            </a>
+            <a href="https://www.instagram.com/sleepy_tang.ri/" target="_blank">
+              <img
+                src="assets/instagram.svg"
+                alt="Instagram"
+                class="w-6 h-6 inline hover:opacity-80"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-lg text-gray-800 leading-relaxed space-y-6">
+        <p class="font-bold text-3xl">About Me</p>
+        <p>
+          I am a Computer Science student at Northeastern University, Boston,
+          with a concentration in Artificial Intelligence. Majority of my
+          experience centers around Computer Vision and Reinforcement Learning.
+          I also have experience in backend development to support mobile
+          applications through FastAPI and Supabase.
+        </p>
+
+        <p class="font-bold text-xl">Computer Vision</p>
+        <p>
+          I've built deep learning models for fundamental computer vision tasks
+          as well as generative pipelines for image and caption data generation.
+          I've recently expanded my direction to focus on drone localization and
+          scene understanding.
+        </p>
+
+        <p class="font-bold text-xl">Reinforcement Learning</p>
+        <p>
+          I've worked on Reinforcement Learning with a special focus on
+          multi-joint agents and goal-conditioned models for simple and complex
+          tasks. Currently, I'm working towards developing trained agents for
+          quadrupeds and quadcopter drones to navigate unknown terrain.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
