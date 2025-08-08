@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Richard Tang - Projects</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            sans: ["Ubuntu", "sans-serif"],
+          },
+        },
+      };
+    </script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#e3dcd2]">
+    <nav
+      class="bg-red-800 text-white text-3xl font-bold px-6 py-4 flex items-center flex-initial justify-between"
+    >
+      <div class="hover:text-[#e3dcd2]">
+        <a href="index.html">RICHARD TANG</a>
+      </div>
+
+      <div class="flex space-x-6">
+        <a href="index.html#about" class="hover:text-[#e3dcd2] px-3 py-2"
+          >About Me</a
+        >
+        <a href="projects.html" class="hover:text-[#e3dcd2] px-3 py-2">
+          Projects</a
+        >
+        <a href="" class="hover:text-[#e3dcd2] px-3 py-2"> Resume</a>
+      </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto mt-20 px-6 space-y-12">
+      <h1 class="text-4xl font-bold text-center">My Projects</h1>
+
+      <!-- Filter Buttons -->
+      <div class="flex justify-center space-x-4 mb-8">
+        <button
+          class="filter-btn bg-red-800 text-white px-4 py-2 rounded-lg"
+          data-filter="all"
+        >
+          All
+        </button>
+        <button
+          class="filter-btn bg-yellow-200 text-yellow-800 px-4 py-2 rounded-lg"
+          data-filter="Reinforcement Learning"
+        >
+          Reinforcement Learning
+        </button>
+        <button
+          class="filter-btn bg-blue-200 text-blue-800 px-4 py-2 rounded-lg"
+          data-filter="Computer Vision"
+        >
+          Computer Vision
+        </button>
+        <button
+          class="filter-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-lg"
+          data-filter="Misc"
+        >
+          Misc
+        </button>
+      </div>
+
+      <div id="projects-container">
+        <!-- Project 1 -->
+        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-8" data-tags="Reinforcement Learning">
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="md:w-2/5">
+              <img src="assets/goal_rl.gif" alt="Project Photo" class="rounded-lg w-full">
+            </div>
+            <div class="md:w-3/5 space-y-4">
+              <div class="flex justify-between items-center">
+                <a href="https://github.com/CodeKnight314/Goal-Conditioned-RL-Framework" target="_blank" class="text-3xl font-bold hover:underline">
+                  Goal Conditioned Framework
+                </a>
+                <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-yellow-200 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Reinforcement Learning</span>
+              </div>
+              <p class="text-lg text-gray-700">
+                This repository implements a goal-conditioned reinforcement learning framework with DDPG, SAC, TD3 and TQC for the Panda-Gym environment on OpenAI gymnasium. The framework trains the Franka-Emika Arm to accomplish reaching, pushing, sliding and pick-place tasks to high success rates.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const projectCards = document.querySelectorAll(".project-card");
+
+        const colorConfig = {
+          "Reinforcement Learning": ["bg-yellow-200", "text-yellow-800"],
+          "Computer Vision": ["bg-blue-200", "text-blue-800"],
+          Misc: ["bg-gray-200", "text-gray-800"],
+          all: ["bg-gray-200", "text-gray-800"],
+        };
+
+        const selectedColor = ["bg-red-800", "text-white"];
+
+        function resetButtonColors() {
+          filterButtons.forEach((btn) => {
+            const filter = btn.dataset.filter;
+            btn.classList.remove(...selectedColor);
+            if (colorConfig[filter]) {
+              btn.classList.add(...colorConfig[filter]);
+            }
+          });
+        }
+
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const filter = button.dataset.filter;
+
+            // Update button styles
+            resetButtonColors();
+            button.classList.remove(...(colorConfig[filter] || []));
+            button.classList.add(...selectedColor);
+
+            // Filter project cards
+            projectCards.forEach((card) => {
+              const tags = card.dataset.tags.split(",");
+              if (filter === "all" || tags.includes(filter)) {
+                card.style.display = "block";
+              } else {
+                card.style.display = "none";
+              }
+            });
+          });
+        });
+
+        // Set initial state
+        const initialFilter = document.querySelector(
+          '.filter-btn[data-filter="all"]'
+        );
+        initialFilter.classList.remove(...colorConfig["all"]);
+        initialFilter.classList.add(...selectedColor);
+      });
+    </script>
+  </body>
+</html>
