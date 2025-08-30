@@ -88,9 +88,7 @@
   }
 }
 
-.page-transition {
-  animation: fadeInUp 0.8s ease-out;
-}
+
 
 @keyframes fadeInUp {
   from {
@@ -168,6 +166,8 @@ html {
 
 .project-card {
   transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
 }
 
 .project-card.fade-out {

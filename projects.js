@@ -96,9 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
           card.style.display = "block";
           card.style.animationDelay = `${index * 0.1}s`;
 
-          setTimeout(() => {
-            card.style.animation = "fadeInUp 0.6s ease-out";
-          }, index * 100);
+
         } else {
           card.classList.remove("fade-in");
           card.classList.add("fade-out");
