@@ -26,6 +26,11 @@ function openModal(imageSrc, caption) {
 
     modalImage.src = imageSrc;
     modalImage.alt = caption;
+
+    // Set image dimensions: height 640px, width proportional
+    modalImage.style.height = "640px";
+    modalImage.style.width = "auto";
+
     modalImage.style.display = "block";
     modalImage.style.opacity = "1";
     modalImage.style.animation = "scaleIn 0.3s ease-out";
