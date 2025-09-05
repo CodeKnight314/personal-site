@@ -27,7 +27,6 @@ function openModal(imageSrc, caption) {
     modalImage.src = imageSrc;
     modalImage.alt = caption;
 
-    // Set image dimensions: height 640px, width proportional
     modalImage.style.height = "640px";
     modalImage.style.width = "auto";
 
@@ -64,6 +63,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const projectCards = document.querySelectorAll(".project-card");
 
+  const imageObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.classList.remove("lazy");
+          observer.unobserve(img);
+        }
+      });
+    },
+    {
+      rootMargin: "50px 0px",
+      threshold: 0.01,
+    }
+  );
+
+  document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+    imageObserver.observe(img);
+  });
+
   const colorConfig = {
     "Reinforcement Learning": ["bg-yellow-200", "text-yellow-800"],
     "Computer Vision": ["bg-blue-200", "text-blue-800"],
@@ -91,27 +110,27 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.remove(...(colorConfig[filter] || []));
       button.classList.add(...selectedColor);
 
-      projectCards.forEach((card, index) => {
-        const tags = card.dataset.tags.split(",");
-        const shouldShow = filter === "all" || tags.includes(filter);
+      requestAnimationFrame(() => {
+        projectCards.forEach((card, index) => {
+          const tags = card.dataset.tags.split(",");
+          const shouldShow = filter === "all" || tags.includes(filter);
 
-        if (shouldShow) {
-          card.classList.remove("fade-out");
-          card.classList.add("fade-in");
-          card.style.display = "block";
-          card.style.animationDelay = `${index * 0.1}s`;
+          if (shouldShow) {
+            card.classList.remove("fade-out");
+            card.classList.add("fade-in");
+            card.style.display = "block";
+            card.style.animationDelay = `${index * 0.05}s`;
+          } else {
+            card.classList.remove("fade-in");
+            card.classList.add("fade-out");
 
-
-        } else {
-          card.classList.remove("fade-in");
-          card.classList.add("fade-out");
-
-          setTimeout(() => {
-            if (card.classList.contains("fade-out")) {
-              card.style.display = "none";
-            }
-          }, 300);
-        }
+            setTimeout(() => {
+              if (card.classList.contains("fade-out")) {
+                card.style.display = "none";
+              }
+            }, 200);
+          }
+        });
       });
     });
   });

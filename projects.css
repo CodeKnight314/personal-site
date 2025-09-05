@@ -91,8 +91,6 @@
   }
 }
 
-
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -181,4 +179,58 @@ html {
 .project-card.fade-in {
   opacity: 1;
   transform: scale(1);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-thumbnail {
+  height: 12rem;
+  border-radius: 0.5rem;
+  background: #e5e7eb;
+}
+
+.skeleton-text {
+  height: 1rem;
+  background: #e5e7eb;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  background: #e5e7eb;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  width: 70%;
+}
+
+.project-card {
+  will-change: opacity, transform;
+}
+
+.project-thumbnail {
+  will-change: transform, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-thumbnail,
+  .fade-in,
+  .fade-out {
+    animation: none !important;
+    transition: none !important;
+  }
 }
