@@ -48,7 +48,7 @@
       </div>
     </nav>
 
-    <div class="max-w-4xl mx-auto mt-20 px-6 space-y-12">
+    <div class="max-w-7xl mx-auto mt-20 px-6 space-y-12">
       <h1 class="text-4xl font-bold text-center">My Projects</h1>
 
       <!-- Filter Buttons -->
@@ -79,341 +79,356 @@
         </button>
       </div>
 
-      <div id="projects-container">
+      <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <!-- Project 1 -->
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Reinforcement Learning">
-          <div class="relative mb-6">
-            <img src="assets/goal_rl.gif" alt="Goal Conditioned Framework" class="project-thumbnail lazy" loading="lazy" onclick="openModal('assets/goal_rl.gif', 'Goal Conditioned Framework')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 0ms; animation-play-state: running;" data-tags="Reinforcement Learning">
+          <a href="https://github.com/CodeKnight314/Goal-Conditioned-RL-Framework" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Goal Conditioned Framework" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/goal_rl.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-200 text-yellow-800 absolute bg-secondary text-secondary-foreground -top-2 left-3 z-10">Reinforcement Learning</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Goal Conditioned Framework</h3>
+            <p class="text-gray-600 line-clamp-2">A goal-conditioned reinforcement learning framework with DDPG, SAC, TD3 and TQC for the Panda-Gym environment. Trains robotic arm for reaching, pushing, sliding and pick-place tasks.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Goal-Conditioned-RL-Framework" target="_blank" class="text-3xl font-bold hover:underline">
-                Goal Conditioned Framework
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-yellow-200 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded">Reinforcement Learning</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This repository implements a goal-conditioned reinforcement learning framework with DDPG, SAC, TD3 and TQC for the Panda-Gym environment on OpenAI gymnasium. The framework trains the Franka-Emika Arm to accomplish reaching, pushing, sliding and pick-place tasks to high success rates.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/amstra.gif" alt="AMSTRA" class="project-thumbnail" loading="lazy" onclick="openModal('assets/amstra.gif', 'AMSTRA')">
-            <div class="thumbnail-overlay">Click to expand</div>
-          </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/AMSTRA" target="_blank" class="text-3xl font-bold hover:underline">
-                AMSTRA
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              AMSTRA is a designed framework for autonomous and manually controlled drone navigation with real-time object detection and spatial tagging modules. It leverages YoloV8 and SORT-based manager to identify, and track objects of interest. A separate triangulation module uses monocular camera stream to attempt 3D spatial tagging of detected objects. The system is designed for real-time operation, featuring a server-client architecture to balance computation load.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Goal-Conditioned-RL-Framework" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/genitext.gif" alt="GenIText" class="project-thumbnail" loading="lazy" onclick="openModal('assets/genitext.gif', 'GenIText')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 100ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/AMSTRA" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="AMSTRA" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/amstra.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">AMSTRA</h3>
+            <p class="text-gray-600 line-clamp-2">Autonomous drone navigation framework with real-time object detection and spatial tagging. Uses YoloV8 and SORT for tracking with 3D spatial mapping capabilities.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">YOLOv8</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">OpenCV</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/GenIText" target="_blank" class="text-3xl font-bold hover:underline">
-                GenIText
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This repository is independently developed as a flexible framework to generate high-quality Image-Text pairs for finetuning Image-Generation models, such as Stable Diffusion, DALL-E, and other generative models. It leverages open-source VLLMs to caption unlabeled image data for various output format to use in stable-diffusion models.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Reinforcement Learning">
-          <div class="relative mb-6">
-            <img src="assets/mujrl.gif" alt="MujRL" class="project-thumbnail" loading="lazy" onclick="openModal('assets/mujrl.gif', 'MujRL')">
-            <div class="thumbnail-overlay">Click to expand</div>
-          </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/MujRL" target="_blank" class="text-3xl font-bold hover:underline">
-                MujRL
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-yellow-200 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded">Reinforcement Learning</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This project provides implementations of two state-of-the-art reinforcement learning algorithms: Twin Delayed Deep Deterministic Policy Gradient (TD3) and Soft Actor-Critic (SAC). Both algorithms are implemented for various MuJoCo environments, including Ant, HalfCheetah, Hopper, Inverted Pendulum, Inverted Double Pendulum, Walker, and reacher. Resulting models are able to perform manipulation or movement tasks competently
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/AMSTRA" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Reinforcement Learning">
-          <div class="relative mb-6">
-            <img src="assets/space_invaders_egm.gif" alt="Space Invaders DQN" class="project-thumbnail" loading="lazy" onclick="openModal('assets/space_invaders_egm.gif', 'Towards Efficient Deep Q-Learning for Space Invaders')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 200ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/GenIText" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="GenIText" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/genitext.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">GenIText</h3>
+            <p class="text-gray-600 line-clamp-2">Flexible framework for generating high-quality Image-Text pairs for fine-tuning generative models like Stable Diffusion and DALL-E using open-source VLLMs.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">VLLM</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">HuggingFace</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Towards-Efficient-Deep-Q-Learning-for-Space-Invaders-" target="_blank" class="text-3xl font-bold hover:underline">
-                Towards Efficient Deep Q-Learning for Space Invaders
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-yellow-200 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded">Reinforcement Learning</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This repository is a resource-conscious reinforcement learning framework designed to train Deep Q-Network (DQN) agents for Atari games—specifically Space Invaders—on consumer-grade hardware. This project explores architectural optimizations and training strategies that reduce compute and memory restrictions while retaining favorable performance. Overall, the optimized DQN model outperform standard DQN models by 57% while scaling more efficiently.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/GenIText" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/cnn_posenet.gif" alt="CNN PoseNet Suite" class="project-thumbnail" loading="lazy" onclick="openModal('assets/cnn_posenet.gif', 'CNN PoseNet Suite')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 300ms; animation-play-state: running;" data-tags="Reinforcement Learning">
+          <a href="https://github.com/CodeKnight314/MujRL" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="MujRL" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/mujrl.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-200 text-yellow-800 absolute -top-2 left-3 z-10">Reinforcement Learning</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">MujRL</h3>
+            <p class="text-gray-600 line-clamp-2">Implementation of TD3 and SAC reinforcement learning algorithms for MuJoCo environments including Ant, HalfCheetah, Hopper, and Walker for robotic control tasks.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">MuJoCo</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/CNN-PoseNet-Suite" target="_blank" class="text-3xl font-bold hover:underline">
-                CNN PoseNet Suite
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/MujRL" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          </div>
+        </div>
+
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 400ms; animation-play-state: running;" data-tags="Reinforcement Learning">
+          <a href="https://github.com/CodeKnight314/Towards-Efficient-Deep-Q-Learning-for-Space-Invaders-" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Space Invaders DQN" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/space_invaders_egm.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-200 text-yellow-800 absolute -top-2 left-3 z-10">Reinforcement Learning</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Efficient Deep Q-Learning</h3>
+            <p class="text-gray-600 line-clamp-2">Resource-conscious DQN framework for Atari games optimized for consumer hardware. Achieves 57% better performance than standard DQN with efficient scaling.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Atari</div>
             </div>
-            <p class="text-lg text-gray-700">
-              This repository focuses on 6-DoF camera pose estimation using various deep learning models on the 7-Scenes dataset. Specifically, the repository expands on the original paper to train Posenets with different CNN backbones for performance tradeoff comparison. While `ResNet`-based PoseNets offered faster inference time, performance overall for PoseNets were limited, as seen from visualized trajectories.
-            </p>
+          </div>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Towards-Efficient-Deep-Q-Learning-for-Space-Invaders-" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          </div>
+        </div>
+
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 500ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/CNN-PoseNet-Suite" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="CNN PoseNet Suite" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/cnn_posenet.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">CNN PoseNet Suite</h3>
+            <p class="text-gray-600 line-clamp-2">6-DoF camera pose estimation using deep learning models on 7-Scenes dataset. Compares different CNN backbones for performance tradeoffs in pose estimation.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Computer Vision</div>
+            </div>
+          </div>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/CNN-PoseNet-Suite" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
         
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/unet_seg.png" alt="UNet Segmentation" class="project-thumbnail" loading="lazy" onclick="openModal('assets/unet_seg.png', 'UNet Image Segmentation for Aerial Imagery of Dubai')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 600ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/UNet-Image-Segmentation" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="UNet Image Segmentation" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/unet_seg.png" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">UNet Image Segmentation</h3>
+            <p class="text-gray-600 line-clamp-2">Semantic segmentation of aerial images using UNet to classify land, water, buildings, roads, and vegetation in Dubai imagery.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">UNet</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/UNet-Image-Segmentation" target="_blank" class="text-3xl font-bold hover:underline">
-                UNet Image Segmentation for Aerial Imagery of Dubai
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This repository contains the implementation of UNet for Semantic Segmentation of Aerial Images, classifying land, water, buildings, roads, and vegetation using aerial images over Dubai. While underperforming on small or underepresented features, the UNet model performed competently on larger image features such as land, roads, and buildings.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/unet_denoise.png" alt="UNet Denoising" class="project-thumbnail" loading="lazy" onclick="openModal('assets/unet_denoise.png', 'UNet Image Denoising for COCO Dataset')">
-            <div class="thumbnail-overlay">Click to expand</div>
-          </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/UNet-Image-Denoising" target="_blank" class="text-3xl font-bold hover:underline">
-                UNet Image Denoising for COCO Dataset
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This is an educational repository for training a standard U-Net model for image denoising. The project supports training with either a consistent noise level or varying noise levels across different data samples. The UNet model performed general image denoising to sufficient degree but shows room for improvement on finer detail recovery, possibly due to needing to learn from multiple noise levels simultaneously.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/UNet-Image-Segmentation" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/nerf.gif" alt="NeRF Implementation" class="project-thumbnail" loading="lazy" onclick="openModal('assets/nerf.gif', 'Neural Radiance Field Implementation')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 700ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/UNet-Image-Denoising" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="UNet Image Denoising" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/unet_denoise.png" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">UNet Image Denoising</h3>
+            <p class="text-gray-600 line-clamp-2">Educational repository for U-Net image denoising with support for consistent and varying noise levels. Performs general image denoising with room for detail recovery improvements.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">UNet</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/NeRF-Pytorch-Implementation" target="_blank" class="text-3xl font-bold hover:underline">
-                Neural Radiance Field Implementation
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This is an educational repository on the implementation of NeRF for novel view synthesis, rendering seen objects at unseen angles. Some minor extension work involved using mask losses for foreground and background to improve rendering performance.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/UNet-Image-Denoising" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/esrgan.gif" alt="ESRGAN" class="project-thumbnail" loading="lazy" onclick="openModal('assets/esrgan.gif', 'Enhanced Super-Resolution Generative Adversarial Network')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 800ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/NeRF-Pytorch-Implementation" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Neural Radiance Field" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/nerf.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Neural Radiance Field</h3>
+            <p class="text-gray-600 line-clamp-2">Educational implementation of NeRF for novel view synthesis. Renders objects at unseen angles with mask losses for improved foreground/background rendering.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">NeRF</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank" class="text-3xl font-bold hover:underline">
-                Enhanced Super-Resolution Generative Adversarial Network
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/NeRF-Pytorch-Implementation" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          </div>
+        </div>
+
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 900ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="ESRGAN" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/esrgan.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">ESRGAN</h3>
+            <p class="text-gray-600 line-clamp-2">Enhanced Super-Resolution Generative Adversarial Network for high-fidelity image super-resolution. Trained on HD images for generalization across various contexts.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">GAN</div>
             </div>
-            <p class="text-lg text-gray-700">
-              This repository implements ESRGAN (Enhanced Super-Resolution Generative Adversarial Network) for image super-resolution tasks to high fidelity. The model is trained on a small set of high definition images and is generalizable to a wide variety of single-image contexts.
-            </p>
+          </div>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
         
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Misc">
-          <div class="relative mb-6">
-            <img src="assets/cognitus.png" alt="Cognitus Chess Engine" class="project-thumbnail" loading="lazy" onclick="openModal('assets/cognitus.png', 'Cognitus: Python-based Chess Engine with Alpha-beta Pruning')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1000ms; animation-play-state: running;" data-tags="Misc">
+          <a href="https://github.com/CodeKnight314/Chess-Engine-Cognitus" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Cognitus Chess Engine" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/cognitus.png" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-gray-200 text-gray-800 absolute -top-2 left-3 z-10">Misc</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Cognitus Chess Engine</h3>
+            <p class="text-gray-600 line-clamp-2">Python-based chess engine with Alpha-beta pruning. Estimated ELO rating of 1550-1750, performing at 4-7 depth evaluations due to computational constraints.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Alpha-beta</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Chess</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Chess-Engine-Cognitus" target="_blank" class="text-3xl font-bold hover:underline">
-                Cognitus: Python-based Chess Engine with Alpha-beta Pruning
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-gray-200 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded">Misc</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This is a python-based chess engine for deploying algorithmic-based min-maxing game-playing agents with Alpha-Beta pruning. Current ELO rating is estimated between 1550 elo and 1750 elo, performing at evaluations with 4-7 depths due to computation constraints.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/canny_edge.gif" alt="Canny Edge Detection" class="project-thumbnail" loading="lazy" onclick="openModal('assets/canny_edge.gif', 'Canny-Edge Detection')">
-            <div class="thumbnail-overlay">Click to expand</div>
-          </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank" class="text-3xl font-bold hover:underline">
-                Canny-Edge Detection
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This project demonstrates the full Canny Edge Detection algorithm, highlighting its core logic and enhancements for accuracy, robustness, and speed. It includes image and video inference scripts, with optional FFT-based convolution for faster Gaussian filtering. The repository is built as an educational resource, making the algorithm's inner workings accessible while offering configurable parameters for experimentation.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Chess-Engine-Cognitus" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Reinforcement Learning">
-          <div class="relative mb-6">
-            <img src="assets/traffic_rl.gif" alt="Traffic Control RL" class="project-thumbnail" loading="lazy" onclick="openModal('assets/traffic_rl.gif', 'Traffic Control with Reinforcement Learning')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1100ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Canny Edge Detection" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/canny_edge.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Canny Edge Detection</h3>
+            <p class="text-gray-600 line-clamp-2">Complete implementation of Canny Edge Detection algorithm with enhancements for accuracy and speed. Includes FFT-based convolution and configurable parameters.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">OpenCV</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">FFT</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank" class="text-3xl font-bold hover:underline">
-                Traffic Control with Reinforcement Learning
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-yellow-200 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded">Reinforcement Learning</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This project applies deep reinforcement learning to optimize traffic signal timing using SUMO simulations. A modified DuelDQN model enables weight transfer from single-intersection tasks, allowing agents to quickly adapt to multi-intersection n×n traffic control scenarios. By leveraging shared base policies, multiple agents can efficiently coordinate and improve traffic flow under unseen conditions.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Reinforcement Learning">
-          <div class="relative mb-6">
-            <img src="assets/c_lander_video.gif" alt="Lunar Lander" class="project-thumbnail" loading="lazy" onclick="openModal('assets/c_lander_video.gif', 'Lunar Lander with varying action space using Actor-Critic model')">
-            <div class="thumbnail-overlay">Click to expand</div>
-          </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank" class="text-3xl font-bold hover:underline">
-                Lunar Lander with varying action space using Actor-Critic model
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-yellow-200 text-yellow-800 text-sm font-medium px-2.5 py-0.5 rounded">Reinforcement Learning</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This project explores reinforcement learning on OpenAI Gym's LunarLander-v2 using both Deep Q-Networks (for discrete control) and Actor-Critic methods (for continuous control). The discrete models are lightweight feedforward networks, while the continuous Actor-Critic setup leverages Gaussian policy outputs, a Q-value Critic, and action noise for exploration. Results show that Actor-Critic converges up to 4× faster than DQNs, highlighting its efficiency in continuous action spaces.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/ESRGAN-pytorch" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Computer Vision">
-          <div class="relative mb-6">
-            <img src="assets/stable_diffusion.gif" alt="Stable Diffusion" class="project-thumbnail" loading="lazy" onclick="openModal('assets/stable_diffusion.gif', 'Custom Fine-tuning Framework for Stable-Diffusion')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1200ms; animation-play-state: running;" data-tags="Reinforcement Learning">
+          <a href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Traffic Control RL" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/traffic_rl.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-200 text-yellow-800 absolute -top-2 left-3 z-10">Reinforcement Learning</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Traffic Control RL</h3>
+            <p class="text-gray-600 line-clamp-2">Deep reinforcement learning for traffic signal optimization using SUMO simulations. Modified DuelDQN with weight transfer for multi-intersection scenarios.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">SUMO</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/Stable-Diffusion-Pytorch" target="_blank" class="text-3xl font-bold hover:underline">
-                Custom Fine-tuning Framework for prompt-based Image Generation using Stable-Diffusion with Pytorch
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">Computer Vision</span>
-            </div>
-            <p class="text-lg text-gray-700">
-              This project provides an educational framework for fine-tuning the Stable Diffusion model via HuggingFace, supporting both conditional and unconditional image training. Instead of re-implementing Stable Diffusion from scratch, it offers a lightweight, configurable class for efficient fine-tuning tasks. Future extensions aim to cover image-to-image translation, inpainting, and related applications.
-            </p>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
 
-        <div class="project-card bg-white rounded-lg shadow-lg p-6 mb-6 " data-tags="Misc">
-          <div class="relative mb-6">
-            <img src="assets/audio_visual.gif" alt="FFT Audio Visualization" class="project-thumbnail" loading="lazy" onclick="openModal('assets/audio_visual.gif', 'Fast Fourier Transformation for Audio Visualization')">
-            <div class="thumbnail-overlay">Click to expand</div>
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1300ms; animation-play-state: running;" data-tags="Reinforcement Learning">
+          <a href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Lunar Lander" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/c_lander_video.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-200 text-yellow-800 absolute -top-2 left-3 z-10">Reinforcement Learning</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Lunar Lander RL</h3>
+            <p class="text-gray-600 line-clamp-2">Reinforcement learning on LunarLander-v2 using DQN and Actor-Critic methods. Actor-Critic converges 4x faster than DQN in continuous action spaces.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Gym</div>
+            </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <a href="https://github.com/CodeKnight314/FFT-Audio-Visualization" target="_blank" class="text-3xl font-bold hover:underline">
-                Fast Fourier Transformation for Audio Visualization
-              </a>
-              <span class="status-completed text-sm font-medium text-white bg-green-500 px-3 py-1 rounded-full">Completed</span>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Traffic-Control-RL" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          </div>
+        </div>
+
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1400ms; animation-play-state: running;" data-tags="Computer Vision">
+          <a href="https://github.com/CodeKnight314/Stable-Diffusion-Pytorch" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="Stable Diffusion" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/stable_diffusion.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-gray-200 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded">Misc</span>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-blue-200 text-blue-800 absolute -top-2 left-3 z-10">Computer Vision</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">Stable Diffusion Fine-tuning</h3>
+            <p class="text-gray-600 line-clamp-2">Educational framework for fine-tuning Stable Diffusion models via HuggingFace. Supports conditional and unconditional training with lightweight implementation.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">PyTorch</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">HuggingFace</div>
             </div>
-            <p class="text-lg text-gray-700">
-              This project demonstrates the use of Fast Fourier Transform (FFT) to decompose audio signals into their frequency components. It includes a rendering pipeline (render.py) that converts MP3 audio into frame-by-frame visualizations of normalized magnitude vs. frequency, compiled into an MP4 video matching the audio duration. A sample 60 fps rendered video is provided for reference.
-            </p>
+          </div>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/Stable-Diffusion-Pytorch" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          </div>
+        </div>
+
+        <div class="project-card group relative flex flex-col rounded-xl border border-gray-200 overflow-hidden transition-all hover:border-red-800/50 hover:shadow-xl hover:shadow-red-800/5 opacity-0 animate-fade-in" style="background-color: #FDFDFD; animation-delay: 1500ms; animation-play-state: running;" data-tags="Misc">
+          <a href="https://github.com/CodeKnight314/FFT-Audio-Visualization" target="_blank">
+            <div class="relative overflow-hidden" style="aspect-ratio: 16 / 9;">
+              <img alt="FFT Audio Visualization" loading="lazy" decoding="async" class="object-cover transition-transform duration-700 group-hover:scale-110" src="assets/audio_visual.gif" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </div>
+          </a>
+          <div class="flex-1 p-6 space-y-3 relative">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-gray-200 text-gray-800 absolute -top-2 left-3 z-10">Misc</div>
+            <h3 class="text-xl font-bold group-hover:text-red-800 transition-colors duration-300">FFT Audio Visualization</h3>
+            <p class="text-gray-600 line-clamp-2">Fast Fourier Transform for audio signal decomposition and visualization. Converts MP3 audio to frequency-based visualizations compiled into matching MP4 videos.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">Python</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">FFT</div>
+              <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full">OpenCV</div>
+            </div>
+          </div>
+          <div class="p-6 pt-0 mt-auto">
+            <a class="inline-flex items-center text-sm gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-all duration-300 hover:bg-red-800 hover:text-white h-10 px-4 py-2 w-full justify-between text-white bg-red-800" href="https://github.com/CodeKnight314/FFT-Audio-Visualization" target="_blank">View Project<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </div>
         </div>
     </div>
