@@ -235,6 +235,34 @@ h3.group:first-of-type { margin-top: 0; }
 .entry__list li { margin-top: 4px; }
 .entry__list li::marker { color: var(--faint); }
 
+/* ---------- compact sections (experience + highlights) ---------- */
+.section--compact { margin-top: 36px; }
+.section--compact > h2.label {
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+}
+.section--compact > h3.group {
+  margin: 16px 0 6px;
+  font-size: 1rem;
+}
+.section--compact .entry { margin-bottom: 10px; }
+.section--compact .entry:last-child { margin-bottom: 0; }
+.section--compact .entry--collapsible > summary.entry__head {
+  padding: 1px 8px;
+}
+.section--compact .entry__head { gap: 2px 12px; }
+.section--compact .entry__date { font-size: 13px; }
+.section--compact .entry__list {
+  margin: 3px 0 0;
+  padding-left: 18px;
+}
+.section--compact .entry__list li { margin-top: 2px; }
+.section--compact .entry__meta {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+.section--compact .entry--collapsible .entry__desc { margin: 3px 0 0; }
+
 /* ---------- blog list ---------- */
 .posts { list-style: none; margin: 0; padding: 0; }
 .posts li {

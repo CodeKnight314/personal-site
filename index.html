@@ -41,44 +41,68 @@
           <p class="meta-links">
             <a href="https://github.com/CodeKnight314" target="_blank" rel="noopener">GitHub</a> ·
             <a href="https://www.linkedin.com/in/richardgtang/" target="_blank" rel="noopener">LinkedIn</a> ·
-            <a href="mailto:tang.ri@northeastern.edu">tang.ri@northeastern.edu</a> ·
-            <a href="resources/resume.pdf">Résumé</a>
+            <a href="mailto:tang.ri@northeastern.edu">tang.ri@northeastern.edu</a>
           </p>
         </div>
 
         <!-- ===== Experience ===== -->
-        <section>
+        <section class="section--compact">
           <h2 class="label">Experience</h2>
 
-          <div class="entry">
-            <div class="entry__head">
+          <details class="entry entry--collapsible">
+            <summary class="entry__head">
               <span class="entry__title">MLOps + Data Co-op <span class="entry__org">· Infinite Cooling</span></span>
               <span class="entry__date">Jan 2026 – Present</span>
+            </summary>
+            <div class="entry__panel">
+              <div class="entry__panel-inner">
+                <ul class="entry__list">
+                  <li>Built an agentic AI system that synthesizes web, operational, and internal-knowledge sources into operations-optimization recommendations.</li>
+                  <li>Deployed it as a streaming OpenAI-compatible FastAPI service on AWS ECS Fargate behind an Application Load Balancer, with CPU and request-based target-tracking autoscaling.</li>
+                  <li>Designed real-time streaming anomaly detection over flowrate, temperature, and humidity sensor data feeding internal operational metrics.</li>
+                  <li>Built a synthetic-data pipeline that injects a configurable fault taxonomy into clean time-series, producing synthetic labeled datasets to train and validate long-horizon trend-detection models efficiently.</li>
+                </ul>
+                <p class="entry__meta">Python · LangGraph · FastAPI · AWS ECS Fargate · ALB · Time-Series</p>
+              </div>
             </div>
-            <ul class="entry__list">
-              <li>Built an agentic AI system that synthesizes web, operational, and internal-knowledge sources into operations-optimization recommendations.</li>
-              <li>Deployed it as a streaming OpenAI-compatible FastAPI service on AWS ECS Fargate behind an Application Load Balancer, with CPU and request-based target-tracking autoscaling.</li>
-              <li>Designed real-time streaming anomaly detection over flowrate, temperature, and humidity sensor data feeding internal operational metrics.</li>
-              <li>Built a synthetic-data pipeline that injects a configurable fault taxonomy into clean time-series, producing synthetic labeled datasets to train and validate long-horizon trend-detection models efficiently.</li>
-            </ul>
-            <p class="entry__meta">Python · LangGraph · FastAPI · AWS ECS Fargate · ALB · Time-Series</p>
-          </div>
+          </details>
 
-          <div class="entry">
-            <div class="entry__head">
-              <span class="entry__title">Undergraduate Researcher <span class="entry__org">· NEU Visual Intelligence Lab</span></span>
-              <span class="entry__date">2024 – Present</span>
+          <details class="entry entry--collapsible">
+            <summary class="entry__head">
+              <span class="entry__title">Computer Vision Engineer <span class="entry__org">· AeroNU</span></span>
+              <span class="entry__date">Sep 2025 – Present</span>
+            </summary>
+            <div class="entry__panel">
+              <div class="entry__panel-inner">
+                <ul class="entry__list">
+                  <li>Engineered a rocket-detection framework using YOLOv26 and classical computer vision, achieving 84% mAP on internal benchmarks at 30+ frames per second.</li>
+                  <li>Deployed the detection framework on a Jetson Nano with an active gimbal for real-time rocket tracking.</li>
+                  <li>Built a Webots simulation environment to generate large-scale training and evaluation data for object-detection models used in drone deployment.</li>
+                </ul>
+                <p class="entry__meta">YOLO · OpenCV · Jetson Nano · Webots · Object Detection</p>
+              </div>
             </div>
-            <ul class="entry__list">
-              <li>Combined geometric 3D encoders (CUT3R, VGGT) and fusion strategies to improve egocentric video spatial reasoning in a Qwen vision-language model, with supervised fine-tuning.</li>
-              <li>Contributed to a Blender-based simulator that renders photorealistic egocentric household-task video to generate causal spatial-reasoning QA for evaluating multimodal models.</li>
-            </ul>
-            <p class="entry__meta">PyTorch · Vision-Language Models · Spatial Reasoning · LlamaFactory · Blender</p>
-          </div>
+          </details>
+
+          <details class="entry entry--collapsible">
+            <summary class="entry__head">
+              <span class="entry__title">Undergraduate Researcher <span class="entry__org">· NEU Visual Intelligence Lab</span></span>
+              <span class="entry__date">Sep 2024 – Present</span>
+            </summary>
+            <div class="entry__panel">
+              <div class="entry__panel-inner">
+                <ul class="entry__list">
+                  <li>Combined geometric 3D encoders (CUT3R, VGGT) and fusion strategies to improve egocentric video spatial reasoning in a Qwen vision-language model, with supervised fine-tuning.</li>
+                  <li>Contributed to a Blender-based simulator that renders photorealistic egocentric household-task video to generate causal spatial-reasoning QA for evaluating multimodal models.</li>
+                </ul>
+                <p class="entry__meta">PyTorch · Vision-Language Models · Spatial Reasoning · LlamaFactory · Blender</p>
+              </div>
+            </div>
+          </details>
         </section>
 
         <!-- ===== Highlights ===== -->
-        <section>
+        <section class="section--compact">
           <h2 class="label">Highlights</h2>
 
           <h3 class="group">Competitions</h3>
