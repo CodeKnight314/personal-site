@@ -1,1 +1,10 @@
 .DS_Store
+
+# Proprietary / unpublished research code — reference only, never publish from the public site repo
+coolie/
+automated-issue-recommendation/
+EgoSim/
+
+# Temporary local edit tooling (not part of the published site)
+edit-server.py
+*.edit.bak
