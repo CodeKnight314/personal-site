@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+
+# We don't currently use Netlify Functions for the admin board
+# (everything is direct browser → Supabase with RLS).
+# Add this if you later want server-side routes or image proxies.
+[functions]
+  directory = "netlify/functions"
+
+# Optional: nice redirect if someone hits /admin without .html
+# (works because Netlify serves clean URLs for .html files by default)
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog.html"
+  status = 200

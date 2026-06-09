@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog · Richard Tang</title>
+  <meta name="description" content="Writing by Richard Tang on computer science, AI, and systems.">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .nav__links a[aria-current="page"] { color: var(--text); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__name" href="index.html">Richard Tang</a>
+      <span class="nav__links">
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="resources/resume.pdf">Résumé</a>
+      </span>
+    </nav>
+
+    <main id="main">
+      <!-- JS populates this: list view or single article view -->
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 Richard Tang</span>
+      <span>
+        <a href="https://github.com/CodeKnight314" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/richardgtang/" target="_blank" rel="noopener">LinkedIn</a>
+      </span>
+    </footer>
+  </div>
+
+  <!-- Supabase + Markdown renderer (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    // === CONFIG — replace these with your Supabase project values ===
+    const SUPABASE_URL = 'https://mldawswamxiexwkvzbzk.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZGF3c3dhbXhpZXh3a3Z6YnprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NjkwMDYsImV4cCI6MjA5NjU0NTAwNn0.-Cb3eetFxHxbOKtfA-epjYf4y1fOno8tE5G0jhjzDx0';
+
+    if (SUPABASE_URL.includes('YOUR-PROJECT')) {
+      console.warn('%c[blog] Replace SUPABASE_URL and SUPABASE_ANON_KEY with your real values (see README)', 'color:#9a201f');
+    }
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const main = document.getElementById('main');
+
+    function getSlugFromURL() {
+      const params = new URLSearchParams(location.search);
+      return params.get('slug');
+    }
+
+    function setURLSlug(slug) {
+      const url = slug ? `?slug=${encodeURIComponent(slug)}` : location.pathname;
+      history.pushState({}, '', url);
+    }
+
+    async function loadList() {
+      main.innerHTML = '<p class="muted">Loading…</p>';
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('slug, title, published_at, tags')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
+
+      if (error) {
+        main.innerHTML = `<p class="muted">Failed to load posts. ${error.message}</p>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        main.innerHTML = `
+          <div class="blog-header"><h1>Writing</h1></div>
+          <p class="empty">No published posts yet.</p>
+        `;
+        return;
+      }
+
+      const listHTML = data.map(p => {
+        const date = p.published_at ? new Date(p.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        const tags = (p.tags || []).map(t => `<span class="post__cat">${t}</span>`).join('');
+        return `
+          <li>
+            <a href="?slug=${encodeURIComponent(p.slug)}" class="post-link" data-slug="${p.slug}">
+              ${tags}${p.title}
+            </a>
+            <span class="post__date">${date}</span>
+          </li>
+        `;
+      }).join('');
+
+      main.innerHTML = `
+        <div class="blog-header">
+          <h1>Writing</h1>
+        </div>
+        <ul class="posts">
+          ${listHTML}
+        </ul>
+      `;
+
+      // Wire up clicks for nicer UX (still works if JS fails)
+      main.querySelectorAll('.post-link').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const slug = a.dataset.slug;
+          setURLSlug(slug);
+          loadSingle(slug);
+        });
+      });
+    }
+
+    async function loadSingle(slug) {
+      main.innerHTML = '<p class="muted">Loading…</p>';
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .eq('slug', slug)
+        .eq('published', true)
+        .single();
+
+      if (error || !data) {
+        main.innerHTML = `
+          <a class="back" href="blog.html">← All posts</a>
+          <p class="muted">Post not found or not published.</p>
+        `;
+        return;
+      }
+
+      const date = data.published_at
+        ? new Date(data.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+        : '';
+
+      const html = window.marked ? window.marked.parse(data.content || '') : `<pre>${data.content}</pre>`;
+
+      main.innerHTML = `
+        <a class="back" href="blog.html">← All posts</a>
+
+        <article class="article">
+          <div class="article__date">${date}</div>
+          <h1>${data.title}</h1>
+
+          <div class="prose">
+            ${html}
+          </div>
+        </article>
+      `;
+
+      // Back link also updates URL cleanly
+      const back = main.querySelector('.back');
+      if (back) {
+        back.addEventListener('click', (e) => {
+          e.preventDefault();
+          setURLSlug(null);
+          loadList();
+        });
+      }
+    }
+
+    async function init() {
+      // Configure marked a little if available
+      if (window.marked && window.marked.setOptions) {
+        window.marked.setOptions({
+          breaks: true,
+          gfm: true
+        });
+      }
+
+      const slug = getSlugFromURL();
+      if (slug) {
+        await loadSingle(slug);
+      } else {
+        await loadList();
+      }
+
+      // Handle back/forward navigation
+      window.addEventListener('popstate', () => {
+        const s = getSlugFromURL();
+        if (s) loadSingle(s);
+        else loadList();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

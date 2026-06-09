@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Richard Tang</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #fcfbf9; }
+    .nav { display: none; } /* admin page doesn't need the public nav */
+  </style>
+</head>
+<body>
+  <div class="wrap admin">
+    <!-- Populated by JS -->
+    <div id="root"></div>
+  </div>
+
+  <!-- Supabase + Markdown (for preview) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    // === CONFIG — copy from your Supabase dashboard (Project Settings → API) ===
+    const SUPABASE_URL = 'https://mldawswamxiexwkvzbzk.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZGF3c3dhbXhpZXh3a3Z6YnprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NjkwMDYsImV4cCI6MjA5NjU0NTAwNn0.-Cb3eetFxHxbOKtfA-epjYf4y1fOno8tE5G0jhjzDx0';
+
+    if (SUPABASE_URL.includes('YOUR-PROJECT')) {
+      console.warn('%c[admin] Replace SUPABASE_URL and SUPABASE_ANON_KEY with your real values (see README)', 'color:#9a201f');
+    }
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ---------- helpers ----------
+    function slugify(str) {
+      return str.toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    function formatDate(d) {
+      if (!d) return '';
+      return new Date(d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(s) {
+      return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // ---------- new helpers for dashboard + images ----------
+    function switchView(view) {
+      const writing = document.getElementById('writing-view');
+      const tasks = document.getElementById('tasks-view');
+      const title = document.getElementById('view-title');
+
+      document.querySelectorAll('.sidebar .nav-item').forEach(i => i.classList.remove('active'));
+
+      if (view === 'writing') {
+        writing.style.display = '';
+        tasks.style.display = 'none';
+        title.textContent = 'Writing';
+        document.querySelector('.sidebar .nav-item[data-view="writing"]').classList.add('active');
+        renderPostsList(postsCache);
+      } else if (view === 'tasks') {
+        writing.style.display = 'none';
+        tasks.style.display = '';
+        title.textContent = 'Tasks';
+        document.querySelector('.sidebar .nav-item[data-view="tasks"]').classList.add('active');
+        renderTasksList(tasksCache);
+      }
+    }
+
+    async function uploadPostImage(file) {
+      const bucket = 'blog-images';
+      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '-');
+      // Store under a "posts/" folder for organization
+      const path = `posts/${Date.now()}-${safeName}`;
+
+      const { data, error } = await supabaseClient.storage
+        .from(bucket)
+        .upload(path, file, { upsert: true });
+
+      if (error) {
+        alert(
+          'Image upload failed: ' + error.message + 
+          '\n\nPlease create a bucket named "blog-images" in Supabase Storage ' +
+          'and set the security policies (see instructions in chat or README).'
+        );
+        return null;
+      }
+
+      const { data: pub } = supabaseClient.storage.from(bucket).getPublicUrl(path);
+      return pub.publicUrl;
+    }
+
+    function insertAtCursor(textarea, text) {
+      const start = textarea.selectionStart || 0;
+      const end = textarea.selectionEnd || 0;
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+      textarea.value = before + text + after;
+      const newPos = start + text.length;
+      textarea.selectionStart = textarea.selectionEnd = newPos;
+      textarea.focus();
+      textarea.dispatchEvent(new Event('input')); // refresh preview
+    }
+
+    // ---------- state ----------
+    let currentUser = null;
+    let editingPostId = null;   // uuid or null for new
+    let postsCache = [];
+    let tasksCache = [];
+    let currentPostFilter = 'all';
+    let currentTaskFilter = 'all';
+
+    // ---------- UI renderers ----------
+    function renderLogin(msg = '') {
+      const root = document.getElementById('root');
+      root.innerHTML = `
+        <div class="login">
+          <h1>Admin</h1>
+          <form id="login-form">
+            <label>Email</label>
+            <input type="email" id="email" required autocomplete="email" value="richardgtang@gmail.com">
+            <label>Password</label>
+            <input type="password" id="password" required autocomplete="current-password">
+            <div class="actions">
+              <button type="submit">Sign in</button>
+            </div>
+            <div class="msg" id="login-msg">${msg ? escapeHtml(msg) : ''}</div>
+          </form>
+          <p class="muted" style="margin-top:18px;font-size:12px;">
+            Only the configured admin account can access this area.
+          </p>
+        </div>
+      `;
+
+      const form = document.getElementById('login-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const msgEl = document.getElementById('login-msg');
+        msgEl.textContent = 'Signing in…';
+
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+          msgEl.textContent = error.message;
+        } else {
+          // onAuthStateChange will handle the rest
+        }
+      });
+    }
+
+    function renderDashboard() {
+      const root = document.getElementById('root');
+      root.innerHTML = `
+        <div class="dashboard">
+          <!-- SIDEBAR -->
+          <aside class="sidebar">
+            <div class="sidebar-header">
+              <strong>Richard Tang</strong><br>
+              <span style="font-size:11px;color:var(--muted);">Admin</span>
+            </div>
+
+            <nav>
+              <div class="nav-item active" data-view="writing">Writing</div>
+              <div class="nav-item" data-view="tasks">Tasks</div>
+            </nav>
+
+            <div style="margin-top:20px;">
+              <button class="btn primary" id="new-post-btn" style="width:100%;">+ New Post</button>
+            </div>
+
+            <div class="sidebar-footer">
+              <div>${escapeHtml(currentUser?.email || '')}</div>
+              <a href="#" id="logout-btn" style="color:#9a201f;">Sign out</a>
+            </div>
+          </aside>
+
+          <!-- MAIN -->
+          <div class="main">
+            <div class="topbar">
+              <div class="title" id="view-title">Writing</div>
+              <div>
+                <a href="index.html" target="_blank" rel="noopener" style="margin-right:12px;">View site</a>
+                <a href="blog.html" target="_blank" rel="noopener">Blog</a>
+              </div>
+            </div>
+
+            <div class="content">
+              <!-- WRITING VIEW -->
+              <div id="writing-view">
+                <div class="stats">
+                  <div class="stat-card" data-filter="all" style="cursor:pointer;">
+                    <div class="value" id="stat-total">0</div>
+                    <div class="label">Total Posts</div>
+                  </div>
+                  <div class="stat-card" data-filter="published" style="cursor:pointer;">
+                    <div class="value" id="stat-published">0</div>
+                    <div class="label">Published</div>
+                  </div>
+                  <div class="stat-card" data-filter="drafts" style="cursor:pointer;">
+                    <div class="value" id="stat-drafts">0</div>
+                    <div class="label">Drafts</div>
+                  </div>
+                </div>
+
+                <div style="margin-bottom:12px; display:flex; align-items:center; gap:12px;">
+                  <strong style="font-size:13px;">Posts</strong>
+                  <span style="font-size:12px;color:var(--muted);" id="posts-count"></span>
+                </div>
+
+                <ul class="admin-posts" id="posts-list"></ul>
+
+                <div id="post-editor" style="display:none; margin-top:24px;">
+                  <div style="margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+                    <strong style="font-size:13px;">Editor</strong>
+                    <button class="btn small" id="insert-image-btn" type="button">📷 Insert image / gif</button>
+                  </div>
+
+                  <div class="row" style="margin-bottom:10px;">
+                    <div class="field" style="flex:2; margin-bottom:0;">
+                      <label>Title</label>
+                      <input class="input" id="post-title" placeholder="Post title">
+                    </div>
+                    <div class="field" style="flex:1; margin-bottom:0;">
+                      <label>Slug</label>
+                      <input class="input" id="post-slug" placeholder="kebab-case-slug">
+                    </div>
+                  </div>
+
+                  <div class="field" style="margin-bottom:8px;">
+                    <label>Tags (comma separated)</label>
+                    <input class="input" id="post-tags" placeholder="ml, systems, research">
+                  </div>
+
+                  <div style="margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                    <label style="margin:0; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text);">
+                      <input type="checkbox" id="post-published"> Published
+                    </label>
+                    <span id="post-published-at" class="muted" style="font-size:12px;"></span>
+                  </div>
+
+                  <div class="editor">
+                    <div>
+                      <label style="font-size:11px;color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Markdown</label>
+                      <textarea class="textarea" id="post-content" placeholder="Write in Markdown..."></textarea>
+                    </div>
+                    <div>
+                      <label style="font-size:11px;color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Preview</label>
+                      <div class="editor__preview prose" id="post-preview"></div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+                    <button class="btn primary" id="save-post-btn">Save</button>
+                    <button class="btn" id="cancel-edit-btn">Cancel</button>
+                    <button class="btn danger" id="delete-post-btn" style="margin-left:auto;">Delete post</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TASKS VIEW -->
+              <div id="tasks-view" style="display:none;">
+                <div style="margin-bottom:12px; display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+                  <div style="flex: 1 1 220px; min-width:180px;">
+                    <label style="font-size:11px;color:var(--muted);">Quick add</label>
+                    <input class="input" id="task-title" placeholder="New task title…" style="margin-top:2px;">
+                  </div>
+                  <div>
+                    <button class="btn" id="add-task-btn" style="margin-bottom:1px;">Add</button>
+                  </div>
+                </div>
+
+                <div style="margin-bottom:10px; font-size:13px;">
+                  <span class="muted">Show:</span>
+                  <a href="#" class="task-filter active" data-filter="all">All</a> ·
+                  <a href="#" class="task-filter" data-filter="todo">Todo</a> ·
+                  <a href="#" class="task-filter" data-filter="doing">Doing</a> ·
+                  <a href="#" class="task-filter" data-filter="done">Done</a>
+                </div>
+
+                <div id="tasks-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Wire global dashboard actions
+      document.getElementById('logout-btn').addEventListener('click', async () => {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        renderLogin();
+      });
+
+      document.getElementById('new-post-btn').addEventListener('click', () => startNewPost());
+
+      // Sidebar view switching
+      document.querySelectorAll('.sidebar .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const view = item.dataset.view;
+          switchView(view);
+        });
+      });
+
+      // Live preview for post editor
+      const contentEl = document.getElementById('post-content');
+      const previewEl = document.getElementById('post-preview');
+      const titleEl = document.getElementById('post-title');
+      const slugEl = document.getElementById('post-slug');
+
+      // Auto-slug from title when creating new
+      titleEl.addEventListener('input', () => {
+        if (!editingPostId && slugEl) {
+          slugEl.value = slugify(titleEl.value);
+        }
+      });
+
+      contentEl.addEventListener('input', () => {
+        const md = contentEl.value || '';
+        previewEl.innerHTML = window.marked ? window.marked.parse(md) : `<pre>${escapeHtml(md)}</pre>`;
+      });
+
+      document.getElementById('save-post-btn').addEventListener('click', savePost);
+      document.getElementById('cancel-edit-btn').addEventListener('click', cancelPostEdit);
+      document.getElementById('delete-post-btn').addEventListener('click', deleteCurrentPost);
+
+      // Image upload button for posts
+      const insertImageBtn = document.getElementById('insert-image-btn');
+      if (insertImageBtn) {
+        insertImageBtn.addEventListener('click', () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/*,.gif';
+          input.onchange = async () => {
+            if (!input.files.length) return;
+            const file = input.files[0];
+            insertImageBtn.textContent = 'Uploading...';
+            const url = await uploadPostImage(file);
+            insertImageBtn.textContent = '📷 Insert image / gif';
+            if (url) {
+              const textarea = document.getElementById('post-content');
+              const alt = file.name.replace(/\.[^/.]+$/, '');
+              insertAtCursor(textarea, `![${alt}](${url})`);
+            }
+          };
+          input.click();
+        });
+      }
+
+      // Quick add task (simple title → todo)
+      document.getElementById('add-task-btn').addEventListener('click', addTaskQuick);
+      document.getElementById('task-title').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') addTaskQuick();
+      });
+
+      // Task filters (in tasks view)
+      document.querySelectorAll('#tasks-view .task-filter').forEach(link => {
+        if (link.dataset.filter === currentTaskFilter) link.classList.add('active');
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentTaskFilter = link.dataset.filter || 'all';
+          document.querySelectorAll('#tasks-view .task-filter').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          renderTasksList(tasksCache);
+        });
+      });
+
+      // Stat cards for posts (drafts visibility + filtering)
+      document.querySelectorAll('#writing-view .stat-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const filter = card.dataset.filter;
+          currentPostFilter = filter;
+          renderPostsList(postsCache);
+          // highlight active stat
+          document.querySelectorAll('#writing-view .stat-card').forEach(c => c.style.borderColor = 'var(--line)');
+          card.style.borderColor = '#1b1a18';
+        });
+      });
+
+      // Initial data load
+      refreshPosts();
+      refreshTasks();
+
+      // Default to writing view
+      switchView('writing');
+    }
+
+    // Re-render tasks list when filters or data change (already handled in render)
+    // Small helper in case we need it later
+    function applyTaskFilterAndRender() {
+      const container = document.getElementById('tasks-list');
+      if (container && tasksCache) {
+        renderTasksList(tasksCache);
+      }
+    }
+
+    function renderPostsList(posts) {
+      const list = document.getElementById('posts-list');
+      if (!list) return;
+
+      // Calculate stats
+      const total = posts.length;
+      const published = posts.filter(p => p.published).length;
+      const drafts = total - published;
+
+      // Update stat cards
+      const totalEl = document.getElementById('stat-total');
+      const pubEl = document.getElementById('stat-published');
+      const draftsEl = document.getElementById('stat-drafts');
+      if (totalEl) totalEl.textContent = total;
+      if (pubEl) pubEl.textContent = published;
+      if (draftsEl) draftsEl.textContent = drafts;
+
+      // Apply filter
+      let filtered = posts;
+      if (currentPostFilter === 'published') filtered = posts.filter(p => p.published);
+      if (currentPostFilter === 'drafts') filtered = posts.filter(p => !p.published);
+
+      const countEl = document.getElementById('posts-count');
+      if (countEl) countEl.textContent = `${filtered.length} shown`;
+
+      if (!filtered.length) {
+        list.innerHTML = `<li class="empty">No posts in this filter. Click a stat card or “+ New Post”.</li>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(p => {
+        const pub = p.published
+          ? `<span style="color:#6f6b63;font-size:12px;">published</span>`
+          : `<span style="color:#9a201f;font-size:12px;">draft</span>`;
+        const viewLink = p.published
+          ? `<a class="btn small" href="blog.html?slug=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">View</a>`
+          : '';
+        return `
+          <li data-id="${p.id}">
+            <span class="title">${escapeHtml(p.title)}</span>
+            <span class="meta">${escapeHtml(p.slug)} ${pub}</span>
+            <span class="actions">
+              ${viewLink}
+              <button class="btn small" data-action="edit">Edit</button>
+              <button class="btn small" data-action="toggle">${p.published ? 'Unpublish' : 'Publish'}</button>
+              <button class="btn small danger" data-action="delete">Delete</button>
+            </span>
+          </li>
+        `;
+      }).join('');
+
+      list.querySelectorAll('button').forEach(btn => {
+        const li = btn.closest('li');
+        const id = li.dataset.id;
+        const action = btn.dataset.action;
+
+        btn.addEventListener('click', async () => {
+          const post = postsCache.find(x => x.id === id);
+          if (!post) return;
+
+          if (action === 'edit') {
+            editPost(post);
+          } else if (action === 'toggle') {
+            await togglePublish(post);
+          } else if (action === 'delete') {
+            if (confirm(`Delete “${post.title}”?`)) await deletePost(id);
+          }
+        });
+      });
+    }
+
+    function renderTasksList(tasks) {
+      const container = document.getElementById('tasks-list');
+      if (!container) return;
+
+      // Apply filter
+      let filtered = tasks;
+      if (currentTaskFilter !== 'all') {
+        filtered = tasks.filter(t => t.status === currentTaskFilter);
+      }
+
+      if (!filtered.length) {
+        container.innerHTML = `<div class="empty">No tasks in this view.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(t => {
+        const due = t.due_date ? `due ${t.due_date}` : '';
+        const proj = t.project ? escapeHtml(t.project) : '';
+        const prio = t.priority != null ? (t.priority > 0 ? 'high' : t.priority < 0 ? 'low' : '') : '';
+
+        return `
+          <details class="entry entry--collapsible admin-task" data-id="${t.id}">
+            <summary class="entry__head">
+              <span class="entry__title">
+                <span class="status-pill ${t.status}">${t.status}</span>
+                <span>${escapeHtml(t.title)}</span>
+              </span>
+              <span class="entry__date">${[prio, proj, due].filter(Boolean).join(' · ')}</span>
+            </summary>
+            <div class="entry__panel">
+              <div class="entry__panel-inner">
+                <form class="admin-task-form" data-task-id="${t.id}">
+                  <div>
+                    <label>Title</label>
+                    <input class="input" name="title" value="${escapeHtml(t.title || '')}">
+                  </div>
+
+                  <div class="row">
+                    <div style="flex:1">
+                      <label>Status</label>
+                      <select class="input" name="status">
+                        <option value="todo" ${t.status==='todo'?'selected':''}>Todo</option>
+                        <option value="doing" ${t.status==='doing'?'selected':''}>Doing</option>
+                        <option value="done" ${t.status==='done'?'selected':''}>Done</option>
+                      </select>
+                    </div>
+                    <div style="flex:1">
+                      <label>Priority</label>
+                      <select class="input" name="priority">
+                        <option value="1" ${t.priority==1?'selected':''}>High</option>
+                        <option value="0" ${t.priority==0 || t.priority==null ?'selected':''}>Normal</option>
+                        <option value="-1" ${t.priority==-1?'selected':''}>Low</option>
+                      </select>
+                    </div>
+                    <div style="flex:1">
+                      <label>Due date</label>
+                      <input class="input" type="date" name="due_date" value="${t.due_date || ''}">
+                    </div>
+                  </div>
+
+                  <div>
+                    <label>Project / Area</label>
+                    <input class="input" name="project" value="${escapeHtml(t.project || '')}" placeholder="e.g. personal-site, research">
+                  </div>
+
+                  <div>
+                    <label>Description (Markdown supported)</label>
+                    <textarea class="textarea" name="description" style="min-height:90px;" placeholder="Notes, links, steps…">${escapeHtml(t.description || '')}</textarea>
+                  </div>
+
+                  <div class="actions">
+                    <button type="button" class="btn primary save-task-btn">Save changes</button>
+                    <button type="button" class="btn danger delete-task-btn">Delete</button>
+                    <span class="muted" style="margin-left:auto; font-size:11px; align-self:center;">Click title to collapse</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </details>
+        `;
+      }).join('');
+
+      // Wire the forms inside each task
+      container.querySelectorAll('.admin-task-form').forEach(form => {
+        const id = form.dataset.taskId;
+        const task = tasksCache.find(x => x.id === id);
+        if (!task) return;
+
+        // Save handler
+        form.querySelector('.save-task-btn').addEventListener('click', async () => {
+          const fd = new FormData(form);
+          const changes = {
+            title: (fd.get('title') || '').trim(),
+            status: fd.get('status'),
+            priority: parseInt(fd.get('priority'), 10),
+            due_date: fd.get('due_date') || null,
+            project: (fd.get('project') || '').trim() || null,
+            description: (fd.get('description') || '').trim() || null,
+          };
+          if (!changes.title) {
+            alert('Title is required.');
+            return;
+          }
+          await updateTask(id, changes);
+        });
+
+        // Delete handler
+        form.querySelector('.delete-task-btn').addEventListener('click', async () => {
+          if (confirm('Delete this task?')) {
+            await deleteTask(id);
+          }
+        });
+      });
+
+      // Optional: clicking the status pill in the summary cycles it (nice quick action)
+      container.querySelectorAll('.admin-task .status-pill').forEach(pill => {
+        const details = pill.closest('.admin-task');
+        const id = details.dataset.id;
+        pill.style.cursor = 'pointer';
+        pill.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const task = tasksCache.find(x => x.id === id);
+          if (!task) return;
+          const order = ['todo', 'doing', 'done'];
+          const next = order[(order.indexOf(task.status) + 1) % 3];
+          await updateTask(id, { status: next });
+        });
+      });
+    }
+
+    // ---------- data operations ----------
+    async function refreshPosts() {
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+      postsCache = data || [];
+      renderPostsList(postsCache);
+    }
+
+    async function refreshTasks() {
+      const { data, error } = await supabaseClient
+        .from('tasks')
+        .select('*')
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+      tasksCache = data || [];
+      renderTasksList(tasksCache);
+    }
+
+    function startNewPost() {
+      editingPostId = null;
+      const editor = document.getElementById('post-editor');
+      editor.style.display = 'block';
+
+      document.getElementById('post-title').value = '';
+      document.getElementById('post-slug').value = '';
+      document.getElementById('post-tags').value = '';
+      document.getElementById('post-content').value = '';
+      document.getElementById('post-published').checked = false;
+      document.getElementById('post-published-at').textContent = '';
+      document.getElementById('post-preview').innerHTML = '';
+      document.getElementById('post-title').focus();
+    }
+
+    function editPost(post) {
+      editingPostId = post.id;
+      const editor = document.getElementById('post-editor');
+      editor.style.display = 'block';
+
+      document.getElementById('post-title').value = post.title || '';
+      document.getElementById('post-slug').value = post.slug || '';
+      document.getElementById('post-tags').value = (post.tags || []).join(', ');
+      document.getElementById('post-content').value = post.content || '';
+      document.getElementById('post-published').checked = !!post.published;
+      document.getElementById('post-published-at').textContent =
+        post.published_at ? `published ${formatDate(post.published_at)}` : '';
+
+      const preview = document.getElementById('post-preview');
+      preview.innerHTML = window.marked ? window.marked.parse(post.content || '') : escapeHtml(post.content || '');
+
+      document.getElementById('post-title').focus();
+      window.scrollTo({ top: editor.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    }
+
+    function cancelPostEdit() {
+      editingPostId = null;
+      document.getElementById('post-editor').style.display = 'none';
+    }
+
+    async function savePost() {
+      const title = document.getElementById('post-title').value.trim();
+      const slug = document.getElementById('post-slug').value.trim() || slugify(title);
+      const tagsRaw = document.getElementById('post-tags').value.trim();
+      const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+      const content = document.getElementById('post-content').value;
+      const published = document.getElementById('post-published').checked;
+
+      if (!title || !slug || !content) {
+        alert('Title, slug, and content are required.');
+        return;
+      }
+
+      const payload = {
+        title,
+        slug,
+        content,
+        tags,
+        published,
+        published_at: published ? (new Date()).toISOString() : null
+      };
+
+      let error;
+      if (editingPostId) {
+        ({ error } = await supabaseClient.from('posts').update(payload).eq('id', editingPostId));
+      } else {
+        ({ error } = await supabaseClient.from('posts').insert(payload));
+      }
+
+      if (error) {
+        alert('Save failed: ' + error.message);
+        return;
+      }
+
+      document.getElementById('post-editor').style.display = 'none';
+      editingPostId = null;
+      await refreshPosts();
+    }
+
+    async function deleteCurrentPost() {
+      if (!editingPostId) return;
+      if (!confirm('Permanently delete this post?')) return;
+
+      const { error } = await supabaseClient.from('posts').delete().eq('id', editingPostId);
+      if (error) {
+        alert('Delete failed: ' + error.message);
+        return;
+      }
+      document.getElementById('post-editor').style.display = 'none';
+      editingPostId = null;
+      await refreshPosts();
+    }
+
+    async function togglePublish(post) {
+      const newPublished = !post.published;
+      const payload = {
+        published: newPublished,
+        published_at: newPublished && !post.published_at ? new Date().toISOString() : post.published_at
+      };
+
+      const { error } = await supabaseClient.from('posts').update(payload).eq('id', post.id);
+      if (error) {
+        alert('Failed to toggle: ' + error.message);
+        return;
+      }
+      await refreshPosts();
+    }
+
+    async function deletePost(id) {
+      const { error } = await supabaseClient.from('posts').delete().eq('id', id);
+      if (error) {
+        alert('Delete failed: ' + error.message);
+        return;
+      }
+      await refreshPosts();
+    }
+
+    async function addTaskQuick() {
+      const titleEl = document.getElementById('task-title');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      const { error } = await supabaseClient.from('tasks').insert({
+        title,
+        status: 'todo'
+      });
+      if (error) {
+        alert('Failed to add task: ' + error.message);
+        return;
+      }
+      titleEl.value = '';
+      await refreshTasks();
+    }
+
+    async function updateTask(id, changes) {
+      const { error } = await supabaseClient.from('tasks').update(changes).eq('id', id);
+      if (error) {
+        alert('Update failed: ' + error.message);
+        return;
+      }
+      await refreshTasks();
+    }
+
+    async function deleteTask(id) {
+      const { error } = await supabaseClient.from('tasks').delete().eq('id', id);
+      if (error) {
+        alert('Delete failed: ' + error.message);
+        return;
+      }
+      await refreshTasks();
+    }
+
+    // ---------- auth bootstrap ----------
+    async function init() {
+      if (window.marked && window.marked.setOptions) {
+        window.marked.setOptions({ breaks: true, gfm: true });
+      }
+
+      // Listen for auth changes (sign in / sign out from any tab, etc.)
+      supabaseClient.auth.onAuthStateChange(async (event, session) => {
+        if (session?.user) {
+          currentUser = session.user;
+          renderDashboard();
+        } else {
+          currentUser = null;
+          renderLogin();
+        }
+      });
+
+      // Initial session check
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session?.user) {
+        currentUser = session.user;
+        renderDashboard();
+      } else {
+        renderLogin();
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -324,3 +324,455 @@ h3.group:first-of-type { margin-top: 0; }
     margin-top: 4px;
   }
 }
+
+/* ============================================================
+   Admin board + blog reader (added for Supabase admin)
+   These live only on admin.html and blog.html
+   ============================================================ */
+
+/* ---------- blog list (re-uses .posts from earlier) ---------- */
+.blog-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 8px 0 20px;
+}
+.blog-header h1 { margin: 0; font-size: 1.55rem; }
+
+/* ---------- article view ---------- */
+.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.back:hover { color: var(--text); }
+
+/* ---------- admin chrome ---------- */
+.admin {
+  padding-top: 12px;
+}
+.admin-header {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.admin-header .meta {
+  font-size: 14px;
+  color: var(--muted);
+}
+.admin-header .meta a {
+  color: var(--muted);
+}
+.admin-header .meta a:hover {
+  color: var(--text);
+}
+
+.admin h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin: 32px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- login gate ---------- */
+.login {
+  max-width: 360px;
+  margin: 80px auto 0;
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+.login h1 { margin: 0 0 18px; font-size: 1.35rem; }
+.login label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 4px; }
+.login input {
+  width: 100%;
+  font: inherit;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fcfbf9;
+}
+.login .actions { margin-top: 18px; }
+.login button {
+  width: 100%;
+  font: inherit;
+  padding: 10px;
+  border: none;
+  background: #1b1a18;
+  color: #f5f0e8;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.login button:hover { background: #2a2824; }
+.login .msg { margin-top: 12px; font-size: 13px; color: #9a201f; }
+
+/* ---------- forms & buttons ---------- */
+.btn {
+  font: inherit;
+  padding: 7px 13px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn:hover { background: #f7f4ed; }
+.btn.primary {
+  background: #1b1a18;
+  color: #f5f0e8;
+  border-color: #1b1a18;
+}
+.btn.primary:hover { background: #2a2824; }
+.btn.danger {
+  color: #9a201f;
+  border-color: #e8d9d4;
+}
+.btn.small { font-size: 13px; padding: 4px 9px; }
+
+.input, .textarea, select {
+  font: inherit;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fcfbf9;
+  box-sizing: border-box;
+}
+.textarea { min-height: 140px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; }
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.row { display: flex; gap: 12px; }
+
+/* Admin tasks rendered as site-style collapsible entries */
+.admin-task .entry__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.admin-task .status-pill {
+  font-size: 10px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+.admin-task .status-pill.todo { background: #f7f4ed; }
+.admin-task .status-pill.doing { background: #f1ede4; }
+.admin-task .status-pill.done { background: #e8e4db; text-decoration: line-through; }
+
+.admin-task-form {
+  display: grid;
+  gap: 12px;
+}
+.admin-task-form .row {
+  gap: 10px;
+}
+.admin-task-form label {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 3px;
+}
+.admin-task-form .actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Admin posts list to feel more like site lists */
+.admin-posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.admin-posts li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.admin-posts li:first-child {
+  border-top: 1px solid var(--line);
+}
+.admin-posts .title {
+  flex: 1;
+  font-weight: 500;
+}
+.admin-posts .meta {
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.admin-posts .actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.admin-posts .actions .btn {
+  font-size: 12px;
+  padding: 2px 7px;
+}
+
+/* Dashboard stat cards hover */
+.stat-card:hover {
+  border-color: #c4bdb1;
+}
+
+/* Dashboard layout (sidebar + main content) */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #fcfbf9;
+}
+
+/* Make admin page full browser width (stretch side to side) */
+.wrap.admin {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sidebar {
+  width: 240px; /* slightly wider for better nav feel on full-width layout */
+  background: #f7f4ed;
+  border-right: 1px solid var(--line);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.sidebar-header {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar .nav-item {
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sidebar .nav-item:hover {
+  background: #f1ede4;
+}
+
+.sidebar .nav-item.active {
+  background: #e8e4db;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+
+.topbar .title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.content {
+  padding: 32px 48px;
+  flex: 1;
+  overflow: auto;
+}
+
+/* Stats cards for dashboard feel */
+.stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 18px;
+  min-width: 120px;
+}
+
+.stat-card .value {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-card .label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
+
+/* Task filter active state */
+.task-filter {
+  color: var(--muted);
+}
+.task-filter.active,
+.task-filter:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Make editor area feel less like a separate tool */
+#post-editor {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 16px;
+}
+.editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 720px) {
+  .editor { grid-template-columns: 1fr; }
+}
+.editor__preview {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 14px;
+  background: #fcfbf9;
+  min-height: 180px;
+  overflow: auto;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.row > * { flex: 1; }
+
+.inline { display: inline-flex; gap: 8px; align-items: center; }
+
+/* ---------- post editor (admin) ---------- */
+.editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+@media (max-width: 720px) {
+  .editor { grid-template-columns: 1fr; }
+}
+.editor__preview {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 16px;
+  background: #fff;
+  min-height: 220px;
+  overflow: auto;
+}
+.editor__preview h1 { font-size: 1.35rem; margin: .2em 0; }
+.editor__preview h2 { font-size: 1.1rem; margin: 1em 0 .4em; }
+
+/* ---------- posts table / list in admin ---------- */
+.admin-list { margin: 0; padding: 0; list-style: none; }
+.admin-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.admin-list li:first-child { border-top: 1px solid var(--line); }
+.admin-list .title { flex: 1; font-weight: 500; }
+.admin-list .meta { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.admin-list .actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* ---------- tasks ---------- */
+.task {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.task:last-child { border-bottom: none; }
+.task .main { flex: 1; min-width: 0; }
+.task .title {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.task .desc {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14.5px;
+  white-space: pre-wrap;
+}
+.task .meta {
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 2px;
+}
+.status {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.status.todo  { background: #f7f4ed; }
+.status.doing { background: #f1ede4; color: #4a463f; }
+.status.done  { background: #e8e4db; text-decoration: line-through; }
+
+.task-controls {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ---------- misc ---------- */
+.muted { color: var(--muted); }
+.empty { color: var(--faint); font-size: 14px; padding: 20px 0; }
+hr.soft { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
